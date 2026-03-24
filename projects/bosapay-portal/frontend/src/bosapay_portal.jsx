@@ -889,25 +889,26 @@ function AdminQuickBooksInvoicesPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function loadInvoices() {
-      try {
-        const res = await fetchetch("https://bosapay-backend.onrender.com/api/qbo/bosapay-invoices")
-        const data = await res.json();
+  async function loadInvoices() {
+    try {
+      const res = await fetch("https://bosapay-backend.onrender.com/api/qbo/bosapay-invoices");
+      const data = await res.json();
 
-        if (!res.ok) {
-          throw new Error(data.error || "Failed to load invoices");
-        }
-
-        setInvoices(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to load invoices");
       }
-    }
 
-    loadInvoices();
-  }, []);
+      setInvoices(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadInvoices();
+}, []);
+
 
   if (loading) return <div className="content">Loading invoices...</div>;
   if (error) return <div className="content">Error: {error}</div>;
